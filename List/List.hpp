@@ -16,10 +16,21 @@ List<TYPE>::~List()
 template <class TYPE>
 void List<TYPE>::PushBack(TYPE* _element)
 {
+	if (first == NULL)
+	{
+		first = _element;
+		last = _element;
+	}
+	else
+	{
+		last->Next = _element;
+		last = new Cell<TYPE>(_element, last, NULL);
+	}
 }
 template <class TYPE>
 void List<TYPE>::Insert(TYPE* _Element, Iterator<TYPE>& _Iter)
 {
+
     //Insert avant la position courante (limite: impossible d'ajouter à la fin!)
     //Ne supporte pas l'ajout dans une liste vide.
     //2 cas 1)Insertion au début 
