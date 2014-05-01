@@ -16,7 +16,7 @@ List<TYPE>::~List()
 template <class TYPE>
 void List<TYPE>::PushBack(TYPE* _element)
 {
-	if (first == NULL)
+	if (IsEmpty())
 	{
 		first = _element;
 		last = _element;
@@ -56,30 +56,67 @@ void List<TYPE>::Insert(TYPE* _Element, Iterator<TYPE>& _Iter)
 			previousCell->Next = newCell;
 		}
 	}
-} 
+}
 
 template <class TYPE>
 void List<TYPE>::Erase(Iterator<TYPE>& _Iter)
 {
+	if (_Iter->GetCurrent() == Begin() && _Iter->GetCurrent() == End())
+	{
+		del first;
+		del end;
+	}
+	if (_Iter->GetCurrent() == Begin())
+	{
+		Cell<TYPE>* temp = Begin()->Next;
+		del first;
+		first = temp;
+		temp->Previous = NULL;
+	}
+	else if (_Iter->GetCurrent() == End())
+	{
+		Cell<TYPE>* temp = End()->Next;
+		del first;
+		first = temp;
+		temp->Previous = NULL;
+	}
+	else
+	{
+		Cell<TYPE>* prev = _Iter->GetCurrentElement()->Previous;
+		Cell<TYPE>* next = _Iter->GetCurrentElement()->Next;
+
+		prev->Next = next;
+		next->Previous = prev;
+
+		del _Iter->GetCurrentElement();
+	}
     //4 cas possibles... A vous de les trouver!
 }
 
 template <class TYPE>
 TYPE* List<TYPE>::GetElement(const Iterator<TYPE>& _Iter) const
 {
-
+	return _Iter->GetCurrentElement();
 }
 
 template <class TYPE>
 int List<TYPE>::GetNbElements() const
 { 
+	int count = 0;
+	Cell<TYPE>* current = Begin();
+	while (current != End())
+	{
+		current = current->Next;
+		count++;
+	}
 
+	return count;
 }
 
 template <class TYPE>
 bool List<TYPE>::IsEmpty() const
 {
- 
+	return (this->first == NULL);
 } 
 
 template <class TYPE>
