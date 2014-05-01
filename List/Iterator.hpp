@@ -2,7 +2,6 @@
 template <class TYPE>
 Iterator<TYPE>::Iterator(void)
 {
-
 }
 
 template <class TYPE>
@@ -14,7 +13,7 @@ void Iterator<TYPE>::Next(void)
 template <class TYPE>
 void Iterator<TYPE>::Previous(void)
 {
-	this->current = Cell<TYPE>::Previous;
+	this->current = current->Previous;
 }
 
 template <class TYPE>
